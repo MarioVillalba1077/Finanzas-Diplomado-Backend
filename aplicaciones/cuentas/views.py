@@ -55,3 +55,7 @@ class CuentaBloqueoView(APIView):
             {"OK": f"La cuenta {nro_cuenta} se bloqueó correctamente"},
             status=status.HTTP_200_OK
         )
+
+class VerCuentasBloquedasView(ListAPIView):
+    queryset = Cuenta.objects.filter(bloqueda=True)
+    serializer_class = CuentaSerializers
