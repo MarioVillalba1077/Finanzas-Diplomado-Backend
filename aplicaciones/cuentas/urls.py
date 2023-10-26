@@ -14,7 +14,7 @@ urlpatterns = [
     path('editar-moneda/<int:pk>/', views.MonedaRetrieveView.as_view()),
 
     # MOVIMIENTO
-    path('listar-cuenta/', views.CuentaListView.as_view()),
+    path('listar-movimiento/', views.CuentaListView.as_view()),
 
     # CUENTA
     path('bloquear-cuenta/<int:pk>', views.CuentaBloqueoView.as_view()),
