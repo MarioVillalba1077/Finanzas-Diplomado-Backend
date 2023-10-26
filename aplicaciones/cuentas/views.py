@@ -10,15 +10,10 @@ from aplicaciones.cuentas.models import *
 # Create your views here.
 """
     MOVIMIENTO
-        Create, Read, Update, Destroy
+        Read
 """
-class MovimientoCreateView(CreateAPIView):
-    serializer_class = MovimientoSerializers
 
 class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
-class MovimientoRetrieveView(RetrieveUpdateDestroyAPIView):
-    queryset = Movimiento.objects.all()
-    serializer_class = MovimientoSerializers
