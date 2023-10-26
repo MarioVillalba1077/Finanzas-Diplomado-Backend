@@ -73,7 +73,13 @@ class Moneda(models.Model):
 
 
 class Cuenta(models.Model):
+    activo = 'Activo'
+    inactivo = 'Inactivo'
 
+    ESTADOS = [
+        ('A', activo),
+        ('I', inactivo)
+    ]
     TIPOS_CUENTA = [
         ('C', 'Cuenta Corriente'),
         ('A', 'Caja de Ahorro'),
@@ -88,6 +94,7 @@ class Cuenta(models.Model):
     numero_contrato = models.CharField('Nro. Contrato', max_length=40)
     costo_mantenimiento = models.FloatField('Costo Mantenimiento')
     promedio_acreditacion = models.FloatField('Promedio Acreditación')
+    bloqueada = models.BooleanField('Bloqueada', default=False)
     moneda = models.ForeignKey(Moneda, on_delete=models.CASCADE)
 
     class Meta:
