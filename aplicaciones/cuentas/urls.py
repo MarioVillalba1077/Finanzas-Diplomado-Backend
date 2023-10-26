@@ -18,5 +18,6 @@ urlpatterns = [
 
     # CUENTA
     path('bloquear-cuenta/<int:pk>', views.CuentaBloqueoView.as_view()),
+    path('listar-cuentas-bloquedas/', views.VerCuentasBloqueadasView.as_view()),
 
 ]
