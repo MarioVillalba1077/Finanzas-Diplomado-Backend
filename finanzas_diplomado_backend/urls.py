@@ -20,7 +20,8 @@ from rest_framework_simplejwt import views as jwtviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('aplicaciones.cuentas.urls')),
-    path('api/token/create', jwtviews.TokenObtainPairView.as_view(), name='obtener_par_token'),
-    path('api/token/refresh', jwtviews.TokenObtainPairView.as_view(), name='refrescar_token'),
+    path('api/cuentas/', include('aplicaciones.cuentas.urls')),
+    path('api/personas/', include('aplicaciones.personas.urls')),
+    # path('api/token/create', jwtviews.TokenObtainPairView.as_view(), name='obtener_par_token'),
+    # path('api/token/refresh', jwtviews.TokenObtainPairView.as_view(), name='refrescar_token'),
 ]
