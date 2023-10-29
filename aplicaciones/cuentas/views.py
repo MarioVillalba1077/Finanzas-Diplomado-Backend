@@ -236,3 +236,62 @@ class RetiroView(APIView):
                          "message": "Retiro registrado con Éxito"},
                         status=status.HTTP_200_OK)
 
+
+class DepositoView(APIView):
+
+    def post(self, request):
+
+        nro_cuenta = request.data.get('nro_cuenta')
+        monto = request.data.get('monto')
+
+        # Validar datos necesarios
+
+        if not all([nro_cuenta, monto]):
+            return Response({"ok": False,
+                             "message": "La solicitud no contiene los datos necesarios"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        # Validar Monto
+
+        try:
+            monto = float(monto)
+        except Exception:
+            return Response({"ok": False,
+                             "message": "Dato no válido para Monto"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Recuperamos la cuenta
+        try:
+            cuenta = Cuenta.objects.get(numero_cuenta=nro_cuenta)
+        except Cuenta.DoesNotExist:
+            return Response({"ok": False,
+                             "message": "Cuenta no encontrada"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Validamos que la Cuenta esté activa
+
+        if cuenta.estado != "A":
+            return Response({"ok": False,
+                             "message": "La Cuenta no está Activa"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Calcular saldos
+        saldo_actual = cuenta.saldo + monto
+
+        # Registrar movimiento
+        Movimiento.objects.create(cuenta=cuenta,
+                                  tipo_movimiento='DEP',
+                                  saldo_anterior=cuenta.saldo,
+                                  saldo_actual=saldo_actual,
+                                  monto_movimiento=monto,
+                                  numero_cuenta_origen=nro_cuenta,
+                                  numero_cuenta_destino=nro_cuenta,
+                                  canal='C')
+
+        # Actualizamos el Saldo de las Cuentas
+
+        cuenta.saldo += monto
+        cuenta.save()
+
+        return Response({"ok": True,
+                         "message": "Depósito registrado con Éxito"},
+                        status=status.HTTP_200_OK)
