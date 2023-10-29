@@ -1,34 +1,37 @@
 {% block content %}
-  <h1>Lista de Personas</h1>
-  <p>Para crear una nueva persona, <a href="{% url 'crear_persona' %}">haga clic aquí</a>.</p>
-  <table>
+<h1>Lista de Personas</h1>
+    <div style="display: flex;">
+        <a href="{% url 'crear_persona' %}"><button style="margin-right: 10px;">Crear Persona</button></a>
+        <a href="{% url 'buscar_personas' %}"><button>Buscar Personas</button></a>
+    </div> 
+<table>
     <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Tipo Documento</th>
-        <th>Nro. Documento</th>
-        <th>Dirección</th>
-        <!-- <th>Ciudad</th> -->
-        <th>Celular</th>
-        <th>Email</th>
-        <th>Estado</th>
-      </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tipo Documento</th>
+            <th>Nro. Documento</th>
+            <th>Dirección</th>
+            <!-- <th>Ciudad</th> -->
+            <th>Celular</th>
+            <th>Email</th>
+            <th>Estado</th>
+        </tr>
     </thead>
     <tbody>
-      {% for persona in personas %}
-        <tr>
-          <td>{{ persona.nombre }}</td>
-          <td>{{ persona.apellido }}</td>
-          <td>{{ persona.tipo_documento }}</td>
-          <td>{{ persona.numero_documento }}</td>
-          <td>{{ persona.direccion }}</td>
-          <!-- <td>{{ persona.ciudad }}</td> -->
-          <td>{{ persona.celular }}</td>
-          <td>{{ persona.email }}</td>
-          <td>{{ persona.estado }}</td>
-        </tr>
-      {% endfor %}
+        {% for persona in personas %}
+            <tr>
+                <td>{{ persona.nombre }}</td>
+                <td>{{ persona.apellido }}</td>
+                <td>{{ persona.tipo_documento }}</td>
+                <td>{{ persona.numero_documento }}</td>
+                <td>{{ persona.direccion }}</td>
+                <!-- <td>{{ persona.ciudad }}</td> -->
+                <td>{{ persona.celular }}</td>
+                <td>{{ persona.email }}</td>
+                <td>{{ persona.estado }}</td>
+            </tr>
+        {% endfor %}
     </tbody>
-  </table>
+</table>
 {% endblock %}

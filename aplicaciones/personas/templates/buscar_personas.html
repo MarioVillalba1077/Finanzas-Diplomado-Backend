@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar Personas</title>
+</head>
+<body>
+    <h1>Buscar Personas</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+        <br>
+        <label for="numero_documento">Documento:</label>
+        <input type="text" name="numero_documento" id="numero_documento">
+        <br>
+        <input type="submit" value="Buscar">
+    </form>
+    <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tipo Documento</th>
+            <th>Nro. Documento</th>
+            <th>Dirección</th>
+            <!-- <th>Ciudad</th> -->
+            <th>Celular</th>
+            <th>Email</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for persona in personas %}
+            <tr>
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.apellido }}</td>
+              <td>{{ persona.tipo_documento }}</td>
+              <td>{{ persona.numero_documento }}</td>
+              <td>{{ persona.direccion }}</td>
+              <!-- <td>{{ persona.ciudad }}</td> -->
+              <td>{{ persona.celular }}</td>
+              <td>{{ persona.email }}</td>
+              <td>{{ persona.estado }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</body>
+</html>
