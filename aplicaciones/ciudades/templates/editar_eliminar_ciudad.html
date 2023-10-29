@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar o Eliminar Ciudad</title>
+</head>
+<body>
+    <h1>Editar o Eliminar Ciudad</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="editar" value="Editar">
+        <input type="submit" name="eliminar" value="Eliminar">
+    </form>
+</body>
+</html>

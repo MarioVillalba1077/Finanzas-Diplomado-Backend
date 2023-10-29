@@ -32,16 +32,14 @@ def editar_eliminar_persona(request, persona_id):
     if request.method == 'POST':
         form = PersonaForm(request.POST, instance=persona)
         
-        if 'editar' in request.POST:  # Si se hace clic en el botón 'Editar'
+        if 'editar' in request.POST:
             if form.is_valid():
                 form.save()
                 return redirect('listar_personas')
-        elif 'eliminar' in request.POST:  # Si se hace clic en el botón 'Eliminar'
+        elif 'eliminar' in request.POST:
             persona.delete()
             return redirect('listar_personas')
     else:
         form = PersonaForm(instance=persona)
     
     return render(request, 'editar_eliminar_persona.html', {'form': form, 'persona': persona})
-
-

@@ -1,0 +1,31 @@
+{% block content %}
+<h1>Lista de Ciudades</h1>
+    <div style="display: flex;">
+        <a href="{% url 'crear_ciudad' %}"><button style="margin-right: 10px;">Crear Ciudad</button></a>
+        <a href="{% url 'buscar_ciudades' %}"><button>Buscar Ciudades</button></a>
+    </div> 
+<table>
+    <thead>
+        <tr>
+            <th>Nombre Ciudad</th>
+            <th>Departamento</th>
+            <th>Código Postal</th>
+            <th>X</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ciudad in ciudades %}
+            <tr>
+                <td>{{ ciudad.nombre }}</td>
+                <td>{{ ciudad.departamento }}</td>
+                <td>{{ ciudad.codigo_postal }}</td>
+                <td>
+                    <a href="{% url 'editar_eliminar_ciudad' ciudad.id %}">
+                        <button>Editar o Eliminar</button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

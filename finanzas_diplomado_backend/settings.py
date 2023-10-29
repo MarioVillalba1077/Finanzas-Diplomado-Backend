@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #Mis Aplicaciones
     'aplicaciones.cuentas',
     'aplicaciones.personas',
+    'aplicaciones.ciudades',
     #Aplicaciones de Terceros
     'rest_framework',
     'rest_framework_simplejwt',

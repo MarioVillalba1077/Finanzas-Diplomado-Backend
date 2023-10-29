@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar Ciudades</title>
+</head>
+<body>
+    <h1>Buscar Ciudades</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+        <br>
+        <label for="departamento">Documento:</label>
+        <input type="text" name="departamento" id="departamento">
+        <br>
+        <input type="submit" value="Buscar">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre Ciudad</th>
+                <th>Departamento</th>
+                <th>Código Postal</th>
+                <th>X</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ciudad in ciudades %}
+                <tr>
+                    <td>{{ ciudad.nombre }}</td>
+                    <td>{{ ciudad.departamento }}</td>
+                    <td>{{ ciudad.codigo_postal }}</td>
+                    <td>
+                        <a href="{% url 'editar_eliminar_ciudad' ciudad.id %}">
+                            <button>Editar o Eliminar</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
