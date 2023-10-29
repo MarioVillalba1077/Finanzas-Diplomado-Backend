@@ -20,6 +20,38 @@ class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+"""
+    CIUDAD
+        Create, Read, Update, Destroy
+"""
+
+class CiudadCreateView(CreateAPIView):
+    serializer_class = CiudadSerializers
+
+class CiudadListView(ListAPIView):
+    queryset = Ciudad.objects.all()
+    serializer_class = CiudadSerializers
+
+class CiudadRetrieveView(RetrieveUpdateDestroyAPIView):
+    queryset = Ciudad.objects.all()
+    serializer_class = CiudadSerializers
+
+"""
+    Persona
+        Create, Read, Update, Destroy
+"""
+
+class PersonaCreateView(CreateAPIView):
+    serializer_class = PersonaSerializers
+
+class PersonaListView(ListAPIView):
+    queryset = Persona.objects.all()
+    serializer_class = PersonaSerializers
+
+class PersonaRetrieveView(RetrieveUpdateDestroyAPIView):
+    queryset = Persona.objects.all()
+    serializer_class = PersonaSerializers
+
 
 """
     MONEDA
@@ -295,3 +327,4 @@ class DepositoView(APIView):
         return Response({"ok": True,
                          "message": "Depósito registrado con Éxito"},
                         status=status.HTTP_200_OK)
+
