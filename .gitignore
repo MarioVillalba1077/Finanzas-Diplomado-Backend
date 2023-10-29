@@ -63,6 +63,11 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# Django migration files
+*/migrations/
+__pycache__
+*.pyc
+
 # Flask stuff:
 instance/
 .webassets-cache
