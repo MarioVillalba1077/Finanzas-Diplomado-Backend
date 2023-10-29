@@ -17,3 +17,36 @@ class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+
+"""
+    MONEDA
+        Create, Read, Update, Destroy
+"""
+
+class MonedaCreateView(CreateAPIView):
+    serializer_class = MonedaSerializers
+
+class MonedaListView(ListAPIView):
+    queryset = Moneda.objects.all()
+    serializer_class = MonedaSerializers
+
+class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
+    queryset = Moneda.objects.all()
+    serializer_class = MonedaSerializers
+    
+"""
+    CLIENTE
+        Create, Read, Update, Destroy
+"""
+
+class ClienteCreateView(CreateAPIView):
+    serializer_class = ClienteSerializers
+
+class ClienteListView(ListAPIView):
+        queryset = Cliente.objects.all()
+        serializer_class = ClienteSerializers
+
+class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializers
+
