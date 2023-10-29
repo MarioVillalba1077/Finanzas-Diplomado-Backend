@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #Mis Aplicaciones
+    'aplicaciones.inicio',
     'aplicaciones.cuentas',
     'aplicaciones.personas',
     'aplicaciones.ciudades',
