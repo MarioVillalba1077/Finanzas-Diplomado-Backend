@@ -5,8 +5,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from aplicaciones.cuentas.serializers import *
-from aplicaciones.cuentas.models import Cliente, Persona
+from aplicaciones.cuentas.models import *
 
+# Create your views here.
+"""
+    MOVIMIENTO
+        Read
+"""
+
+class MovimientoListView(ListAPIView):
+    queryset = Movimiento.objects.all()
+    serializer_class = MovimientoSerializers
 
 
 """
@@ -24,6 +33,7 @@ class MonedaListView(ListAPIView):
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
+    
 """
     CLIENTE
         Create, Read, Update, Destroy
