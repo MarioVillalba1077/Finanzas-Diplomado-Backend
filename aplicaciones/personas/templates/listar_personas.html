@@ -16,6 +16,7 @@
             <th>Celular</th>
             <th>Email</th>
             <th>Estado</th>
+            <th>X</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +31,11 @@
                 <td>{{ persona.celular }}</td>
                 <td>{{ persona.email }}</td>
                 <td>{{ persona.estado }}</td>
+                <td>
+                    <a href="{% url 'editar_eliminar_persona' persona.id %}">
+                        <button>Editar o Eliminar</button>
+                    </a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

@@ -17,33 +17,39 @@
     </form>
     <table>
         <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Tipo Documento</th>
-            <th>Nro. Documento</th>
-            <th>Dirección</th>
-            <!-- <th>Ciudad</th> -->
-            <th>Celular</th>
-            <th>Email</th>
-            <th>Estado</th>
-          </tr>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Tipo Documento</th>
+                <th>Nro. Documento</th>
+                <th>Dirección</th>
+                <!-- <th>Ciudad</th> -->
+                <th>Celular</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>X</th>
+            </tr>
         </thead>
         <tbody>
-          {% for persona in personas %}
-            <tr>
-              <td>{{ persona.nombre }}</td>
-              <td>{{ persona.apellido }}</td>
-              <td>{{ persona.tipo_documento }}</td>
-              <td>{{ persona.numero_documento }}</td>
-              <td>{{ persona.direccion }}</td>
-              <!-- <td>{{ persona.ciudad }}</td> -->
-              <td>{{ persona.celular }}</td>
-              <td>{{ persona.email }}</td>
-              <td>{{ persona.estado }}</td>
-            </tr>
-          {% endfor %}
+            {% for persona in personas %}
+                <tr>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.apellido }}</td>
+                    <td>{{ persona.tipo_documento }}</td>
+                    <td>{{ persona.numero_documento }}</td>
+                    <td>{{ persona.direccion }}</td>
+                    <!-- <td>{{ persona.ciudad }}</td> -->
+                    <td>{{ persona.celular }}</td>
+                    <td>{{ persona.email }}</td>
+                    <td>{{ persona.estado }}</td>
+                    <td>
+                        <a href="{% url 'editar_eliminar_persona' persona.id %}">
+                            <button>Editar o Eliminar</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
-      </table>
+    </table>
 </body>
 </html>

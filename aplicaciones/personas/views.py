@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Persona
 from .forms import PersonaForm
 
@@ -24,4 +24,24 @@ def crear_persona(request):
     else:
         form = PersonaForm()
     return render(request, 'crear_persona.html', {'form': form})
+
+
+def editar_eliminar_persona(request, persona_id):
+    persona = get_object_or_404(Persona, pk=persona_id)
+    
+    if request.method == 'POST':
+        form = PersonaForm(request.POST, instance=persona)
+        
+        if 'editar' in request.POST:  # Si se hace clic en el botón 'Editar'
+            if form.is_valid():
+                form.save()
+                return redirect('listar_personas')
+        elif 'eliminar' in request.POST:  # Si se hace clic en el botón 'Eliminar'
+            persona.delete()
+            return redirect('listar_personas')
+    else:
+        form = PersonaForm(instance=persona)
+    
+    return render(request, 'editar_eliminar_persona.html', {'form': form, 'persona': persona})
+
 
