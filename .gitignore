@@ -64,7 +64,7 @@ db.sqlite3
 db.sqlite3-journal
 
 # Django migration files
-*/migrations/
+.*/migrations/
 __pycache__
 *.pyc
 
