@@ -32,3 +32,19 @@ class MonedaSearchView(ListAPIView):
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
+"""
+    CLIENTE
+        Create, Read, Update, Destroy
+"""
+
+class ClienteCreateView(CreateAPIView):
+    serializer_class = ClienteSerializers
+
+class ClienteListView(ListAPIView):
+        queryset = Cliente.objects.all()
+        serializer_class = ClienteSerializers
+
+class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializers
+
