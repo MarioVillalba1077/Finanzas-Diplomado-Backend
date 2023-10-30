@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -77,6 +78,15 @@ class MonedaListView(ListAPIView):
     serializer_class = MonedaSerializers
 
 
+class MonedaSearchView(ListAPIView):
+    serializer_class = MonedaSerializers
+
+    def get_queryset(self):
+        return Moneda.objetcs.filter(
+            descripcion__icontains=self.kwargs['kword']
+        )
+
+
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
@@ -95,6 +105,19 @@ class ClienteCreateView(CreateAPIView):
 class ClienteListView(ListAPIView):
         queryset = Cliente.objects.all()
         serializer_class = ClienteSerializers
+
+
+class ClienteSearchView(ListAPIView):
+    serializer_class = ClienteSerializers
+
+    def get_queryset(self):
+        # Obtener el valor ingresado desde el request
+        kword = self.kwargs['kword']
+
+        # Filtrar clientes que coincidan con un nombre o apellido de la tabla persona
+        return Cliente.objects.filter(
+            Q(persona__nombre__icontains=kword) | Q(persona__apellido__icontains=kword)
+        )
 
 
 class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
