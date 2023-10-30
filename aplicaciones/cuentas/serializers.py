@@ -36,6 +36,21 @@ class CuentaSerializers(serializers.ModelSerializer):
         model = Cuenta
         fields = '__all__'
 
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'cliente': instance.cliente.persona.nombre + ' ' + instance.cliente.persona.apellido,
+            'numero_cuenta': instance.numero_cuenta,
+            'fecha_alta': instance.fecha_alta,
+            'tipo_cuenta': instance.tipo_cuenta,
+            'estado': instance.estado,
+            'saldo': instance.saldo,
+            'numero_contrato': instance.numero_contrato,
+            'costo_mantenimiento': instance.costo_mantenimiento,
+            'promedio_acreditacion': instance.promedio_acreditacion,
+            'moneda': instance.moneda.descripcion
+        }
+
 
 class MovimientoSerializers(serializers.ModelSerializer):
 
