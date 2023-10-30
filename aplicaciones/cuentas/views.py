@@ -26,34 +26,79 @@ class MovimientoListView(ListAPIView):
         Create, Read, Update, Destroy
 """
 
+
 class MonedaCreateView(CreateAPIView):
     serializer_class = MonedaSerializers
+
 
 class MonedaListView(ListAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
 
+
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
-    
+
+
 """
     CLIENTE
         Create, Read, Update, Destroy
 """
 
+
 class ClienteCreateView(CreateAPIView):
     serializer_class = ClienteSerializers
+
 
 class ClienteListView(ListAPIView):
         queryset = Cliente.objects.all()
         serializer_class = ClienteSerializers
+
 
 class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializers
 
 
+"""
+    Modelo: Cuenta
+    Opciones: Listar, Buscar por Nro., Buscar por Nombre o Apellido del Cliente, 
+        Crear, Actualizar y Eliminar
+
+"""
+
+
+class CuentaListView(ListAPIView):
+    queryset = Cuenta.objects.order_by('id')
+    serializer_class = CuentaSerializers
+
+
+class CuentaSearchForNumber(ListAPIView):
+    serializer_class = CuentaSerializers
+
+    def get_queryset(self):
+        return Cuenta.objects.filter(numero_cuenta__icontains=self.kwargs['kword'])
+
+
+class CuentaSearchForCustomer(ListAPIView):
+    serializer_class = CuentaSerializers
+
+    def get_queryset(self):
+        return Cuenta.objects.filter(cliente__persona__nombre__icontains=self.kwargs['kword']) | \
+            Cuenta.objects.filter(cliente__persona__apellido__icontains=self.kwargs['kword'])
+
+
+class CuentaCreateView(CreateAPIView):
+    serializer_class = CuentaSerializers
+
+
+class CuentaRetrieveView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CuentaSerializers
+    queryset = Cuenta.objects.all()
+
+
+# Vista para Operación de Transferencia
 class TransferenciaView(APIView):
 
     def post(self, request):
@@ -169,7 +214,7 @@ class TransferenciaView(APIView):
                         status=status.HTTP_200_OK)
       
    
-    
+# Vista para Operación de Retiro
 class RetiroView(APIView):   
 
     def post(self, request):
@@ -237,6 +282,7 @@ class RetiroView(APIView):
                         status=status.HTTP_200_OK)
 
 
+# Vista para Operación de Depósito
 class DepositoView(APIView):
 
     def post(self, request):
