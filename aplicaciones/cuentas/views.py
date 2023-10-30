@@ -21,6 +21,14 @@ class MonedaListView(ListAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
 
+class MonedaSearchView(ListAPIView):
+    serializer_class = MonedaSerializers
+
+    def get_queryset(self):
+        return Moneda.objetcs.filter(
+            descripcion__icontains=self.kwargs['kword']
+        )
+
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
