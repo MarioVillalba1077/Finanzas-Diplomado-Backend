@@ -16,38 +16,47 @@ from aplicaciones.cuentas.models import *
         Read
 """
 
+
 class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+    
 """
     CIUDAD
         Create, Read, Update, Destroy
 """
 
+
 class CiudadCreateView(CreateAPIView):
     serializer_class = CiudadSerializers
 
+    
 class CiudadListView(ListAPIView):
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
 
+    
 class CiudadRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
 
+    
 """
     Persona
         Create, Read, Update, Destroy
 """
 
+
 class PersonaCreateView(CreateAPIView):
     serializer_class = PersonaSerializers
 
+    
 class PersonaListView(ListAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializers
 
+    
 class PersonaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializers
@@ -66,6 +75,15 @@ class MonedaCreateView(CreateAPIView):
 class MonedaListView(ListAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
+
+
+class MonedaSearchView(ListAPIView):
+    serializer_class = MonedaSerializers
+
+    def get_queryset(self):
+        return Moneda.objetcs.filter(
+            descripcion__icontains=self.kwargs['kword']
+        )
 
 
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
