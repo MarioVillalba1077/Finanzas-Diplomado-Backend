@@ -15,14 +15,26 @@ from aplicaciones.cuentas.models import *
 
 """
     MOVIMIENTO
-        Read
+        Read, Search
 """
-
 
 class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+class MovimientoSearchView(ListAPIView):
+    serializer_class = MovimientoSerializers
+
+    def get_queryset(self):
+        id_cuenta = self.kwargs['kword1']
+        mes = self.kwargs['kword2']
+        anho = self.kwargs['kword3']
+
+        return Movimiento.objects.filter(
+            Q(fecha_movimiento__month=mes) &
+            Q(fecha_movimiento__year=anho) &
+            Q(cuenta=id_cuenta)
+        )
 
 """
     CIUDAD
