@@ -4,7 +4,7 @@ from django.db import models
 
 ESTADOS = [
     ('A', 'Activo'),
-    ('B', 'Baja'),
+    ('I', 'Inactiva'),
 ]
 
 
@@ -73,13 +73,7 @@ class Moneda(models.Model):
 
 
 class Cuenta(models.Model):
-    activo = 'Activo'
-    inactivo = 'Inactivo'
 
-    ESTADOS = [
-        ('A', activo),
-        ('I', inactivo)
-    ]
     TIPOS_CUENTA = [
         ('C', 'Cuenta Corriente'),
         ('A', 'Caja de Ahorro'),

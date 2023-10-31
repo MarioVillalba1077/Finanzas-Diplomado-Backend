@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, \
+    RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets, status
@@ -160,6 +161,11 @@ class CuentaCreateView(CreateAPIView):
 class CuentaRetrieveView(RetrieveUpdateDestroyAPIView):
     serializer_class = CuentaSerializers
     queryset = Cuenta.objects.all()
+
+
+"""
+    OPERACIONES
+"""
 
 
 # Vista para Operación de Transferencia
@@ -406,10 +412,9 @@ class DepositoView(APIView):
                          "message": "Depósito registrado con Éxito"},
                         status=status.HTTP_200_OK)
 
+
 # Vista para Bloquear Cuenta
 class CuentaBloqueoView(APIView):
-    queryset = Cuenta.objects.all()
-    serializer_class = CuentaSerializers
 
     def post(self, request):
 
@@ -422,13 +427,13 @@ class CuentaBloqueoView(APIView):
         # Validar si está recibiendo el número de cuenta
         if nro_cuenta is None or nro_cuenta == "":
             return Response(
-                {"error": "Por favor cargue el número de cuenta"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+                {"ok": False,
+                 "message": "Por favor cargue el número de cuenta"},
+                status=status.HTTP_400_BAD_REQUEST)
 
         # Validar si el número de cuenta existe, está activa o bloqueada
         try:
-            cuenta= Cuenta.objects.get(numero_cuenta=nro_cuenta)
+            cuenta = Cuenta.objects.get(numero_cuenta=nro_cuenta)
         except ObjectDoesNotExist:
             cuenta_existente = False
 
@@ -440,24 +445,22 @@ class CuentaBloqueoView(APIView):
                 cuenta_bloqueada = True
 
         if not cuenta_existente or not cuenta_activa or cuenta_bloqueada:
-            return Response(
-                {"message": "La cuenta no existe o probablemente puede que esté bloqueada o inactiva"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"ok": False,
+                             "message": "La cuenta no existe o probablemente puede que esté bloqueada o inactiva"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # Bloquear cuenta
         cuenta.bloqueada = True
         cuenta.save()
 
-        return Response(
-            {"OK": f"La cuenta {nro_cuenta} se bloqueó correctamente"},
-            status=status.HTTP_200_OK
-        )
+        return Response({"ok": True,
+                         "message": f"La cuenta {nro_cuenta} se bloqueó correctamente"},
+                        status=status.HTTP_200_OK)
 
 
 # Vista para Listar Cuentas Bloqueadas
 class VerCuentasBloquedasView(ListAPIView):
-    queryset = Cuenta.objects.filter(bloqueda=True)
+    queryset = Cuenta.objects.filter(bloqueada=True)
     serializer_class = CuentaSerializers
       
       
