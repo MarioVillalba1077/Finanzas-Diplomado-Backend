@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s-_@1f21tjf#9v0i+p^+itrb+7%@o_9bzjj6mgq#p%l%x=3t%m'
+SECRET_KEY = os.environ.get('SECRETKEY', 'django-insecure-s-_@1f21tjf#9v0i+p^+itrb+7%@o_9bzjj6mgq#p%l%x=3t%m')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
@@ -90,11 +91,11 @@ WSGI_APPLICATION = 'finanzas_diplomado_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'FinanzasDiplomado',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('NAMEDB', 'finanzas-diplomado-desarrollo'),
+        'USER': os.environ.get('USERDB', 'postgres'),
+        'PASSWORD': os.environ.get('PASSWORDDB', 'myPass'),
+        'HOST': os.environ.get('HOSTDB', 'localhost'),
+        'PORT': os.environ.get('PORTDB', '8088'),
     }
 }
 
