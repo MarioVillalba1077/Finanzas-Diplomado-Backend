@@ -17,11 +17,15 @@ from aplicaciones.cuentas.models import *
         Read, Search
 """
 
+
 class MovimientoListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+
 class MovimientoSearchView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = MovimientoSerializers
 
     def get_queryset(self):
@@ -35,6 +39,7 @@ class MovimientoSearchView(ListAPIView):
             Q(cuenta=id_cuenta)
         )
 
+
 """
     CIUDAD
         Create, Read, Update, Destroy
@@ -42,18 +47,24 @@ class MovimientoSearchView(ListAPIView):
 
 
 class CiudadCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CiudadSerializers
 
 
 class CiudadListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
+
 
 class CiudadRetrieveView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
 
+
 class CiudadSearchView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CiudadSerializers
 
     def get_queryset(self):
@@ -63,6 +74,7 @@ class CiudadSearchView(ListAPIView):
             Q(nombre__icontains=kword) | Q(departamento__icontains=kword)
         )
 
+
 """
     Persona
         Create, Read, Update, Destroy
@@ -70,19 +82,24 @@ class CiudadSearchView(ListAPIView):
 
 
 class PersonaCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = PersonaSerializers
 
 
 class PersonaListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializers
 
 
 class PersonaRetrieveView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializers
 
+
 class PersonaSearchView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = PersonaSerializers
 
     def get_queryset(self):
@@ -100,13 +117,18 @@ class PersonaSearchView(ListAPIView):
 
 
 class MonedaCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = MonedaSerializers
 
+
 class MonedaListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
 
+
 class MonedaSearchView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = MonedaSerializers
 
     def get_queryset(self):
@@ -114,7 +136,9 @@ class MonedaSearchView(ListAPIView):
             descripcion__icontains=self.kwargs['kword']
         )
 
+
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
 
@@ -126,15 +150,18 @@ class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
 
 
 class ClienteCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ClienteSerializers
 
 
 class ClienteListView(ListAPIView):
-        queryset = Cliente.objects.all()
-        serializer_class = ClienteSerializers
+    permission_classes = [IsAuthenticated]
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializers
 
 
 class ClienteSearchView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ClienteSerializers
 
     def get_queryset(self):
@@ -148,6 +175,7 @@ class ClienteSearchView(ListAPIView):
 
 
 class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializers
 
@@ -161,11 +189,13 @@ class ClienteRetrieveView(RetrieveUpdateDestroyAPIView):
 
 
 class CuentaListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Cuenta.objects.order_by('id')
     serializer_class = CuentaSerializers
 
 
 class CuentaSearchForNumber(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CuentaSerializers
 
     def get_queryset(self):
@@ -173,6 +203,7 @@ class CuentaSearchForNumber(ListAPIView):
 
 
 class CuentaSearchForCustomer(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CuentaSerializers
 
     def get_queryset(self):
@@ -181,10 +212,12 @@ class CuentaSearchForCustomer(ListAPIView):
 
 
 class CuentaCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CuentaSerializers
 
 
 class CuentaRetrieveView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = CuentaSerializers
     queryset = Cuenta.objects.all()
 
@@ -196,6 +229,7 @@ class CuentaRetrieveView(RetrieveUpdateDestroyAPIView):
 
 # Vista para Operación de Transferencia
 class TransferenciaView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -311,7 +345,8 @@ class TransferenciaView(APIView):
       
    
 # Vista para Operación de Retiro
-class RetiroView(APIView):   
+class RetiroView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -380,6 +415,7 @@ class RetiroView(APIView):
 
 # Vista para Operación de Depósito
 class DepositoView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -441,6 +477,7 @@ class DepositoView(APIView):
 
 # Vista para Bloquear Cuenta
 class CuentaBloqueoView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -486,6 +523,7 @@ class CuentaBloqueoView(APIView):
 
 # Vista para Listar Cuentas Bloqueadas
 class VerCuentasBloquedasView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Cuenta.objects.filter(bloqueada=True)
     serializer_class = CuentaSerializers
       
