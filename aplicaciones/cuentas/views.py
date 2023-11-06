@@ -12,17 +12,28 @@ from aplicaciones.cuentas.models import *
 
 # Create your views here.
 
-
 """
     MOVIMIENTO
-        Read
+        Read, Search
 """
-
 
 class MovimientoListView(ListAPIView):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializers
 
+class MovimientoSearchView(ListAPIView):
+    serializer_class = MovimientoSerializers
+
+    def get_queryset(self):
+        id_cuenta = self.kwargs['kword1']
+        mes = self.kwargs['kword2']
+        anho = self.kwargs['kword3']
+
+        return Movimiento.objects.filter(
+            Q(fecha_movimiento__month=mes) &
+            Q(fecha_movimiento__year=anho) &
+            Q(cuenta=id_cuenta)
+        )
 
 """
     CIUDAD
@@ -38,11 +49,19 @@ class CiudadListView(ListAPIView):
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
 
-
 class CiudadRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Ciudad.objects.all()
     serializer_class = CiudadSerializers
 
+class CiudadSearchView(ListAPIView):
+    serializer_class = CiudadSerializers
+
+    def get_queryset(self):
+        kword = self.kwargs['kword']
+
+        return Ciudad.objects.filter(
+            Q(nombre__icontains=kword) | Q(departamento__icontains=kword)
+        )
 
 """
     Persona
@@ -63,6 +82,16 @@ class PersonaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializers
 
+class PersonaSearchView(ListAPIView):
+    serializer_class = PersonaSerializers
+
+    def get_queryset(self):
+        kword = self.kwargs['kword']
+
+        return Persona.objects.filter(
+            Q(nombre__icontains=kword) | Q(apellido__icontains=kword)
+        )
+
 
 """
     MONEDA
@@ -73,20 +102,17 @@ class PersonaRetrieveView(RetrieveUpdateDestroyAPIView):
 class MonedaCreateView(CreateAPIView):
     serializer_class = MonedaSerializers
 
-
 class MonedaListView(ListAPIView):
     queryset = Moneda.objects.all()
     serializer_class = MonedaSerializers
-
 
 class MonedaSearchView(ListAPIView):
     serializer_class = MonedaSerializers
 
     def get_queryset(self):
-        return Moneda.objetcs.filter(
+        return Moneda.objects.filter(
             descripcion__icontains=self.kwargs['kword']
         )
-
 
 class MonedaRetrieveView(RetrieveUpdateDestroyAPIView):
     queryset = Moneda.objects.all()
