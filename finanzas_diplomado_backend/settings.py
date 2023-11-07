@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'finanzas_diplomado_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('NAMEDB', 'finanzas-diplomado-desarrollo'),
+        'NAME': os.environ.get('NAMEDB', 'FinanzasDiplomado'),
         'USER': os.environ.get('USERDB', 'postgres'),
-        'PASSWORD': os.environ.get('PASSWORDDB', 'myPass'),
+        'PASSWORD': os.environ.get('PASSWORDDB', '12345'),
         'HOST': os.environ.get('HOSTDB', 'localhost'),
-        'PORT': os.environ.get('PORTDB', '8088'),
+        'PORT': os.environ.get('PORTDB', '5432'),
     }
 }
 

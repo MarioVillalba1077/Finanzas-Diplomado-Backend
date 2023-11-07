@@ -522,7 +522,7 @@ class CuentaBloqueoView(APIView):
 
 
 # Vista para Listar Cuentas Bloqueadas
-class VerCuentasBloquedasView(ListAPIView):
+class VerCuentasBloqueadasView(ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Cuenta.objects.filter(bloqueada=True)
     serializer_class = CuentaSerializers

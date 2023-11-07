@@ -48,7 +48,8 @@ class CuentaSerializers(serializers.ModelSerializer):
             'numero_contrato': instance.numero_contrato,
             'costo_mantenimiento': instance.costo_mantenimiento,
             'promedio_acreditacion': instance.promedio_acreditacion,
-            'moneda': instance.moneda.descripcion
+            'moneda': instance.moneda.descripcion,
+            'bloqueada': instance.bloqueada,
         }
 
 
