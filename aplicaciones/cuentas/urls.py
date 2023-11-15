@@ -38,4 +38,6 @@ urlpatterns = [
     path('v1/bloquear-cuenta/', CuentaBloqueoView.as_view()),
 
     path('v1/listar-cuentas-bloqueadas', VerCuentasBloqueadasView.as_view()),
+
+    path('v1/imprimir-extracto/<kword1>/<kword2>/<kword3>', ImprimirExtracto.as_view()),
 ]

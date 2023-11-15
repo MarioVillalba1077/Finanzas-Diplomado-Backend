@@ -59,6 +59,25 @@ class MovimientoSerializers(serializers.ModelSerializer):
         model = Movimiento
         fields = '__all__'
 
+    def to_representation(self, instance):
+
+        return {
+           'id': instance.id,
+           'fecha_movimiento': instance.fecha_movimiento.isoformat(),
+           'tipo_movimiento': instance.tipo_movimiento,
+           'saldo_anterior': instance.saldo_anterior,
+           'saldo_actual': instance.saldo_actual,
+           'monto_movimiento': instance.monto_movimiento,
+           'numero_cuenta_origen': instance.numero_cuenta_origen,
+           'numero_cuenta_destino': instance.numero_cuenta_destino,
+           'canal': instance.canal,
+           'cuenta': instance.cuenta.id,
+           'numero_cuenta': instance.cuenta.numero_cuenta,
+           'moneda': instance.cuenta.moneda.descripcion,
+           'cliente': instance.cuenta.cliente.persona.nombre + ' ' + instance.cuenta.cliente.persona.apellido,
+           'nro_documento': instance.cuenta.cliente.persona.numero_documento
+        }
+
 
 
 

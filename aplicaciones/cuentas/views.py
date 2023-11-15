@@ -9,6 +9,8 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from aplicaciones.cuentas.serializers import *
 from aplicaciones.cuentas.models import *
+import os
+import subprocess
 
 # Create your views here.
 
@@ -428,6 +430,7 @@ class DepositoView(APIView):
             return Response({"ok": False,
                              "message": "La solicitud no contiene los datos necesarios"},
                             status=status.HTTP_400_BAD_REQUEST)
+
         # Validar Monto
 
         try:
@@ -528,3 +531,74 @@ class VerCuentasBloqueadasView(ListAPIView):
     serializer_class = CuentaSerializers
       
       
+class ImprimirExtracto(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+
+        nombre_archivo = ""
+        nombre_archivo_resultado = ""
+        nombre_archivo_log = ""
+
+        try:
+            id_cuenta = self.kwargs['kword1']
+            mes = self.kwargs['kword2']
+            anho = self.kwargs['kword3']
+
+            movimientos = Movimiento.objects.filter(
+                Q(fecha_movimiento__month=mes) &
+                Q(fecha_movimiento__year=anho) &
+                Q(cuenta=id_cuenta)
+            )
+
+            movimientos_serializer = MovimientoSerializers(movimientos, many=True)
+
+            # Creamos el archivo de texto con el JSON resultado
+
+            nombre_archivo = f"{id_cuenta}_{mes}_{anho}.txt"
+            file = open(nombre_archivo, "w")
+            file.write(str(movimientos_serializer.data).replace("'", '"'))
+            file.close()
+
+            # Le pasamos el archivo al ejecutable que genera el pdf
+
+            p = subprocess.Popen(["GenerarExtracto.exe", nombre_archivo])
+            p.wait()
+            nombre_archivo_resultado = f"{id_cuenta}_{mes}_{anho}.pdf"
+            nombre_archivo_log = f"{id_cuenta}_{mes}_{anho}.log"
+
+            # Verificar que se haya generado el PDF
+
+            if os.path.exists(nombre_archivo_resultado):
+                import base64
+                short_report = open(nombre_archivo_resultado, 'rb')
+                report_encoded = base64.b64encode(short_report.read())
+                short_report.close()
+                return Response({'ok': True,
+                                 'message': 'Extracto generado exitosamente',
+                                 'report': report_encoded}, status=status.HTTP_200_OK)
+            else:
+                return Response({"ok": False,
+                                 "resultado": 'El extracto no pudo ser generado'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as ex:
+            return Response({'ok': False,
+                             'resultado': 'Error Interno. ' + str(ex)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        finally:
+            if os.path.exists(nombre_archivo):
+                os.remove(nombre_archivo)
+
+            if os.path.exists(nombre_archivo_resultado):
+                os.remove(nombre_archivo_resultado)
+
+            if os.path.exists(nombre_archivo_log):
+                os.remove(nombre_archivo_log)
+
+
+
+
+
+
+
