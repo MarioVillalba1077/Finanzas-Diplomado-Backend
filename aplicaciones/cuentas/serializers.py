@@ -22,6 +22,16 @@ class ClienteSerializers(serializers.ModelSerializer):
         model = Cliente
         fields = '__all__'
 
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'Nombre': instance.persona.nombre + ' ' + instance.persona.apellido,
+            'fecha_ingreso': instance.fecha_ingreso,
+            'calificacion': instance.calificacion,
+            'estado': instance.estado,
+            'persona': instance.persona.id
+        }
+
 
 class MonedaSerializers(serializers.ModelSerializer):
 
